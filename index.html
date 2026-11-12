@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f8e9dc">
-<title>Дай пять! — игра про уважение</title>
+<title>Флирт по взаимности — игра про уважение</title>
 <style>
 :root{--ink:#342b34;--muted:#847780;--pink:#f27d91;--peach:#ffcfb3;--cream:#fffaf4;--lilac:#d8c6f4;--green:#638f75}
 *{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 18% 8%,#fff7e8 0,transparent 34%),radial-gradient(ellipse at 90% 83%,#e6dcfa 0,transparent 34%),#f7e9e3;color:var(--ink);font-family:ui-rounded,"Trebuchet MS",system-ui,sans-serif;display:grid;place-items:center;padding:18px;overflow-x:hidden}
@@ -19,8 +19,8 @@ button{font:inherit;color:inherit}.game{width:min(980px,100%);min-height:min(720
 </style>
 </head>
 <body>
-<main class="game" aria-label="Игра Дай пять">
- <header class="top"><div class="brand">✦ <b>Игра про</b> уважение</div><div class="stats"><div class="pill">⭐ Очки: <span id="score">0</span></div><div class="pill">⏱ <span id="time">45</span> сек</div></div></header>
+<main class="game" aria-label="Флирт по взаимности">
+ <header class="top"><div class="brand">✦ <b>Игра про</b> взаимность</div><div class="stats"><div class="pill">⭐ Очки: <span id="score">0</span></div><div class="pill">⏱ <span id="time">45</span> сек</div></div></header>
  <section class="content">
   <div class="scene">
    <div class="sun"></div><span class="spark s1">✦</span><span class="spark s2">✿</span><span class="spark s3">✧</span>
@@ -56,41 +56,41 @@ button{font:inherit;color:inherit}.game{width:min(980px,100%);min-height:min(720
    </svg>
   </div>
   <div class="panel">
-   <div class="eyebrow">Короткая игра • 45 секунд</div><h1>Дай пять!</h1>
-   <p>Это Лена, взрослая девушка. Смотри на её просьбу и выбирай дружелюбный ответ. Сначала — согласие, всегда.</p>
+   <div class="eyebrow">Короткая игра • 45 секунд</div><h1>Флирт по взаимности</h1>
+   <p>Лене 25 лет. Поддерживай лёгкий флирт, замечай её сигналы и не переходи границы. Любое прикосновение — только после ясного согласия.</p>
    <div class="prompt" id="prompt">Нажми «Начать», когда будешь готов.</div>
    <div class="actions">
-    <button class="action primary" data-action="highfive" disabled><span class="icon">🖐️</span><span><span class="label">Дать пять</span><span class="hint">только если Лена предложила</span></span></button>
-    <button class="action" data-action="wave" disabled><span class="icon">👋</span><span><span class="label">Помахать</span><span class="hint">дружеское приветствие</span></span></button>
-    <button class="action" data-action="compliment" disabled><span class="icon">🌼</span><span><span class="label">Сказать комплимент</span><span class="hint">добрые слова</span></span></button>
-    <button class="action" data-action="wait" disabled><span class="icon">☁️</span><span><span class="label">Дать паузу</span><span class="hint">уважать её выбор</span></span></button>
+    <button class="action primary" data-action="highfive" disabled><span class="icon">🖐️</span><span><span class="label">Принять пятёрку</span><span class="hint">только по её приглашению</span></span></button>
+    <button class="action" data-action="wave" disabled><span class="icon">👋</span><span><span class="label">Улыбнуться</span><span class="hint">лёгкий ответ без давления</span></span></button>
+    <button class="action" data-action="compliment" disabled><span class="icon">🌼</span><span><span class="label">Ответить флиртом</span><span class="hint">только если ей приятно</span></span></button>
+    <button class="action" data-action="wait" disabled><span class="icon">☁️</span><span><span class="label">Дать пространство</span><span class="hint">уважать её выбор</span></span></button>
    </div>
    <div class="progress-wrap"><div class="progress" id="progress"></div></div>
   </div>
  </section>
- <footer class="bottom"><span><strong>Правило игры:</strong> уважай «нет» и личные границы</span><button class="sound" id="sound" aria-label="Звук включён">🔊</button></footer>
+ <footer class="bottom"><span><strong>Правило игры:</strong> флирт — только взаимный, прикосновения — только с согласием</span><button class="sound" id="sound" aria-label="Звук включён">🔊</button></footer>
  <div class="toast" id="toast">Отлично!</div>
- <div class="overlay" id="overlay"><div class="card"><div class="emoji">🖐️✨</div><h2 id="endTitle">Дай пять!</h2><p id="endCopy">Сыграй короткую игру на внимательность: отвечай на просьбы Лены и зарабатывай звёзды. Когда она хочет паузу — просто подожди.</p><button class="start" id="start">Начать игру</button></div></div>
+ <div class="overlay" id="overlay"><div class="card"><div class="emoji">💬✨</div><h2 id="endTitle">Флирт по взаимности</h2><p id="endCopy">Сыграй короткую игру на внимательность: отвечай на сигналы Лены и зарабатывай звёзды. Флиртуй легко, а её границы всегда уважай.</p><button class="start" id="start">Начать игру</button></div></div>
 </main>
 <script>
 (()=>{
  const $=s=>document.querySelector(s), buttons=[...document.querySelectorAll('.action')];
  const prompts=[
-  {ask:'Хочешь дать мне пять? 🖐️',sub:'Я сама протянула ладонь — это моё «да».',right:'highfive',yes:'Класс! Отличная пятёрка! ✨'},
-  {ask:'Давай просто помашем друг другу! 👋',sub:'Сегодня без прикосновений, пожалуйста.',right:'wave',yes:'Привет-привет! 👋'},
-  {ask:'Расскажешь что-нибудь доброе? 🌼',sub:'Мне будет приятно услышать комплимент.',right:'compliment',yes:'Спасибо, ты поднял мне настроение! 🌷'},
-  {ask:'Мне нужна минутка отдыха ☁️',sub:'Сейчас ничего не делай — это тоже хороший выбор.',right:'wait',yes:'Спасибо, что уважаешь мою паузу 💛'}
+  {ask:'Поймали общий вайб? 😉',sub:'Мне нравится лёгкий флирт — скажи что-нибудь милое.',right:'compliment',yes:'Ха, ты умеешь смутить 😊'},
+  {ask:'Кажется, мы отлично ладим ✨',sub:'Давай пока просто улыбнёмся друг другу.',right:'wave',yes:'Вот так мне комфортно 🙂'},
+  {ask:'Дашь пять? 🖐️',sub:'Я сама протянула ладонь — это моё «да» на пятёрку.',right:'highfive',yes:'Класс! Отличная пятёрка! ✨'},
+  {ask:'Мне нужна минутка для себя ☁️',sub:'Сейчас не флиртуй и не прикасайся, пожалуйста.',right:'wait',yes:'Спасибо, что уважаешь мою паузу 💛'}
  ];
  let score=0,time=45,active=false,current=null,timer=null,round=0,streak=0,soundOn=true,audio;
  const scoreEl=$('#score'),timeEl=$('#time'),promptEl=$('#prompt'),speech=$('#speech'),overlay=$('#overlay'),progress=$('#progress'),person=$('#person'),toast=$('#toast');
  function enable(on){buttons.forEach(b=>b.disabled=!on)}
- function next(){round++;current=prompts[Math.floor(Math.random()*prompts.length)];speech.innerHTML=current.ask+'<small>'+current.sub+'</small>';promptEl.textContent='Выбери подходящий ответ';enable(true)}
+ function next(){round++;current=prompts[Math.floor(Math.random()*prompts.length)];speech.innerHTML=current.ask+'<small>'+current.sub+'</small>';promptEl.textContent='Заметь её сигнал и выбери ответ';enable(true)}
  function beep(ok){if(!soundOn)return;try{audio=audio||new(window.AudioContext||window.webkitAudioContext)();const o=audio.createOscillator(),g=audio.createGain();o.connect(g);g.connect(audio.destination);o.frequency.value=ok?660:220;g.gain.setValueAtTime(.08,audio.currentTime);g.gain.exponentialRampToValueAtTime(.001,audio.currentTime+.18);o.start();o.stop(audio.currentTime+.18)}catch(e){}}
  function say(msg,good){toast.textContent=msg;toast.style.background=good?'#638f75':'#9b6471';toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1050);person.classList.remove('bounce');void person.offsetWidth;person.classList.add('bounce');beep(good)}
  function answer(action){if(!active||!current)return;const ok=action===current.right;streak=ok?streak+1:0;score=Math.max(0,score+(ok?10+(streak>1?Math.min(streak,5)*2:0):-3));scoreEl.textContent=score;if(ok){say(current.yes,true);promptEl.textContent='Верный выбор! Новая ситуация…'}else{say(current.right==='wait'?'Она попросила паузу. Лучше дать ей время.':'Не совсем — прислушайся к её просьбе.',false);promptEl.textContent='Ничего страшного — попробуй снова'}setTimeout(()=>{if(active)next()},850)}
  buttons.forEach(b=>b.addEventListener('click',()=>answer(b.dataset.action)));
  function start(){clearInterval(timer);score=0;time=45;round=0;streak=0;active=true;scoreEl.textContent='0';timeEl.textContent=time;overlay.classList.add('hidden');next();timer=setInterval(()=>{time--;timeEl.textContent=time;progress.style.width=(time/45*100)+'%';if(time<=0)finish()},1000)}
- function finish(){active=false;clearInterval(timer);enable(false);overlay.classList.remove('hidden');$('#endTitle').textContent=score>=100?'Звезда заботы!':'Хорошая игра!';$('#endCopy').textContent=`Твой результат: ${score} очков. Самое важное — спрашивать, замечать ответ и уважать личные границы.`;$('#start').textContent='Сыграть ещё';speech.innerHTML='Спасибо за игру! <small>Уважение делает общение приятным</small>';promptEl.textContent='Раунд завершён';progress.style.width='100%'}
+ function finish(){active=false;clearInterval(timer);enable(false);overlay.classList.remove('hidden');$('#endTitle').textContent=score>=100?'Звезда заботы!':'Хорошая игра!';$('#endCopy').textContent=`Твой результат: ${score} очков. Самое важное — спрашивать, замечать ответ и уважать личные границы.`;$('#start').textContent='Сыграть ещё';speech.innerHTML='Спасибо за игру! <small>Взаимность делает флирт приятным</small>';promptEl.textContent='Раунд завершён';progress.style.width='100%'}
  $('#start').addEventListener('click',start);$('#sound').addEventListener('click',e=>{soundOn=!soundOn;e.currentTarget.textContent=soundOn?'🔊':'🔇';e.currentTarget.setAttribute('aria-label',soundOn?'Звук включён':'Звук выключен')});
 })();
 </script>
