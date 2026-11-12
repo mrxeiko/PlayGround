@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f8e9dc">
+<title>Дай пять! — игра про уважение</title>
+<style>
+:root{--ink:#342b34;--muted:#847780;--pink:#f27d91;--peach:#ffcfb3;--cream:#fffaf4;--lilac:#d8c6f4;--green:#638f75}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 18% 8%,#fff7e8 0,transparent 34%),radial-gradient(ellipse at 90% 83%,#e6dcfa 0,transparent 34%),#f7e9e3;color:var(--ink);font-family:ui-rounded,"Trebuchet MS",system-ui,sans-serif;display:grid;place-items:center;padding:18px;overflow-x:hidden}
+button{font:inherit;color:inherit}.game{width:min(980px,100%);min-height:min(720px,calc(100dvh - 36px));background:rgba(255,250,244,.88);border:1px solid rgba(255,255,255,.9);box-shadow:0 24px 80px #8e6e6630;border-radius:32px;overflow:hidden;position:relative;display:grid;grid-template-rows:auto 1fr auto}
+.top{display:flex;justify-content:space-between;align-items:center;padding:20px 26px 8px;gap:12px}.brand{font-size:13px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;color:#9b7380}.brand b{color:var(--pink)}.stats{display:flex;gap:9px}.pill{background:#fff;border:1px solid #f1e7e2;border-radius:99px;padding:8px 13px;font-size:13px;font-weight:800;box-shadow:0 3px 10px #493b3510}.pill span{color:#d76780}.content{display:grid;grid-template-columns:1fr .95fr;align-items:center;gap:4px;padding:0 38px 12px}.scene{height:490px;position:relative;display:grid;place-items:center;isolation:isolate}.sun{position:absolute;width:330px;height:330px;border-radius:50%;background:#ffdfca;top:66px;left:50%;transform:translateX(-50%);z-index:-1;box-shadow:0 0 0 18px #ffdfca55,0 0 0 42px #ffdfca25}.spark{position:absolute;font-size:22px;animation:float 3s ease-in-out infinite}.s1{top:73px;left:12%}.s2{top:160px;right:11%;animation-delay:.9s}.s3{bottom:83px;left:17%;animation-delay:1.6s}@keyframes float{50%{transform:translateY(-9px) rotate(12deg)}}
+.person{width:min(340px,88%);height:435px;overflow:visible;filter:drop-shadow(0 13px 10px #513a3920);transition:transform .35s}.person.bounce{animation:bounce .5s ease}@keyframes bounce{35%{transform:translateY(-12px) rotate(-2deg)}70%{transform:translateY(3px) rotate(2deg)}}
+.speech{position:absolute;top:17px;left:50%;transform:translateX(-50%);width:max-content;max-width:85%;background:#fff;border-radius:20px;padding:12px 17px;font-size:15px;font-weight:800;box-shadow:0 7px 24px #6443441a;text-align:center;z-index:2}.speech:after{content:"";position:absolute;bottom:-8px;left:50%;width:16px;height:16px;background:white;transform:translateX(-50%) rotate(45deg)}.speech small{display:block;color:var(--muted);font-size:11px;font-weight:600;margin-top:3px}
+.panel{padding:10px 0 10px 18px}.eyebrow{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:#b4868e;font-weight:900;margin:0 0 10px}.panel h1{font-size:clamp(34px,5vw,53px);line-height:1;letter-spacing:-.05em;margin:0 0 14px}.panel p{color:#786b74;line-height:1.55;margin:0 0 22px;font-size:15px;max-width:380px}.prompt{min-height:50px;color:#8c7581;font-size:13px;font-weight:700;margin-bottom:12px}.actions{display:grid;gap:10px}.action{border:0;border-radius:17px;padding:14px 15px;text-align:left;background:white;box-shadow:0 4px 14px #55434b12;cursor:pointer;display:flex;align-items:center;gap:12px;font-weight:850;transition:transform .15s,box-shadow .15s,background .15s}.action:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 9px 20px #55434b1c}.action:active:not(:disabled){transform:scale(.98)}.action:disabled{opacity:.52;cursor:not-allowed}.icon{width:37px;height:37px;display:grid;place-items:center;background:#fff0eb;border-radius:12px;font-size:20px}.action:nth-child(2) .icon{background:#f2ecff}.action:nth-child(3) .icon{background:#e8f4ec}.action.primary{background:#f27d91;color:white}.action.primary .icon{background:#ffffff35}.action.primary .hint{color:#ffe7eb}.action .label{display:block}.action .hint{display:block;color:#a38f98;font-size:11px;font-weight:650;margin-top:3px}.action.primary .hint{color:#ffe7eb}
+.progress-wrap{height:7px;background:#f0e5e0;border-radius:9px;overflow:hidden;margin:13px 0 6px}.progress{height:100%;width:100%;background:linear-gradient(90deg,#f8a18e,#ee7292);border-radius:9px;transition:width .3s}.bottom{display:flex;justify-content:space-between;align-items:center;padding:12px 26px 20px;color:#9a8b90;font-size:12px}.bottom strong{color:#6e5d67}.sound{border:0;background:#fff;border-radius:50%;width:37px;height:37px;cursor:pointer;font-size:17px}.overlay{position:absolute;inset:0;background:#38293476;backdrop-filter:blur(7px);display:grid;place-items:center;padding:20px;z-index:5}.card{width:min(430px,100%);text-align:center;background:var(--cream);border-radius:28px;padding:34px 30px;box-shadow:0 20px 70px #31212c50}.card .emoji{font-size:54px}.card h2{font-size:34px;letter-spacing:-.04em;margin:12px 0}.card p{color:#786b74;line-height:1.55;margin:0 0 22px}.start{border:0;border-radius:16px;background:var(--pink);color:#fff;font-weight:900;padding:15px 25px;box-shadow:0 8px 18px #f27d9145;cursor:pointer}.start:hover{transform:translateY(-2px)}.hidden{display:none!important}.toast{position:absolute;top:82px;left:50%;transform:translate(-50%,-10px);background:#493c49;color:white;border-radius:99px;padding:11px 18px;font-size:13px;font-weight:850;opacity:0;pointer-events:none;transition:.25s;z-index:4;white-space:nowrap}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:700px){body{padding:8px}.game{min-height:calc(100dvh - 16px);border-radius:25px;grid-template-rows:auto 1fr auto}.top{padding:14px 16px 0}.content{grid-template-columns:1fr;grid-template-rows:minmax(295px,42vh) auto;gap:0;padding:0 20px 10px;align-content:center}.scene{height:100%;min-height:295px}.sun{width:230px;height:230px;top:44px}.person{height:min(340px,39vh);width:270px}.speech{top:8px}.panel{padding:2px 2px 4px}.panel h1{font-size:36px;margin-bottom:8px}.panel p{font-size:13px;margin-bottom:12px;max-width:unset}.eyebrow{margin-bottom:6px}.prompt{min-height:32px;margin-bottom:7px;font-size:12px}.actions{grid-template-columns:1fr 1fr;gap:8px}.action{padding:10px;border-radius:14px;gap:8px;font-size:13px}.action:first-child{grid-column:span 2}.icon{width:31px;height:31px;font-size:17px;border-radius:10px}.action .hint{font-size:10px}.progress-wrap{margin-top:9px}.bottom{padding:9px 16px 13px}.pill{padding:7px 10px;font-size:12px}.stats{gap:5px}}
+@media(max-height:740px) and (min-width:701px){.scene{height:410px}.person{height:370px}.sun{width:285px;height:285px;top:48px}.panel h1{font-size:42px}}
+</style>
+</head>
+<body>
+<main class="game" aria-label="Игра Дай пять">
+ <header class="top"><div class="brand">✦ <b>Игра про</b> уважение</div><div class="stats"><div class="pill">⭐ Очки: <span id="score">0</span></div><div class="pill">⏱ <span id="time">45</span> сек</div></div></header>
+ <section class="content">
+  <div class="scene">
+   <div class="sun"></div><span class="spark s1">✦</span><span class="spark s2">✿</span><span class="spark s3">✧</span>
+   <div class="speech" id="speech">Привет! Сыграем? <small>Я подскажу, что мне сейчас хочется</small></div>
+   <svg class="person" id="person" viewBox="0 0 320 430" role="img" aria-label="Улыбающаяся взрослая блондинка в свитере и джинсах">
+    <!-- hair behind the head -->
+    <path d="M91 125 Q70 37 151 29 Q244 20 238 116 L245 204 Q232 233 218 198 L211 103 Q172 81 125 105 L111 199 Q94 225 83 198Z" fill="#e6ad47" stroke="#bd8034" stroke-width="3"/>
+    <!-- legs -->
+    <path d="M117 292 L111 378 Q113 400 139 399 L151 310Z" fill="#557a9b" stroke="#395872" stroke-width="3"/>
+    <path d="M165 305 L174 378 Q177 399 202 394 L194 286Z" fill="#557a9b" stroke="#395872" stroke-width="3"/>
+    <path d="M111 385 Q98 392 94 408 Q116 418 146 407 L140 394Z" fill="#f2d4bd" stroke="#d7b49f" stroke-width="3"/>
+    <path d="M175 387 Q166 398 169 411 Q194 421 220 408 L204 392Z" fill="#f2d4bd" stroke="#d7b49f" stroke-width="3"/>
+    <!-- neck --> <path d="M139 119 L140 151 Q159 172 179 149 L176 113Z" fill="#f4c9a9"/>
+    <!-- arms -->
+    <path d="M113 172 Q82 181 78 231 L68 267 Q67 281 80 282 Q92 282 96 266 L113 230Z" fill="#efb995" stroke="#d59b7e" stroke-width="3"/>
+    <path d="M195 171 Q228 179 237 217 L252 249 Q260 264 249 271 Q238 277 229 263 L207 232Z" fill="#efb995" stroke="#d59b7e" stroke-width="3"/>
+    <!-- sweater -->
+    <path d="M126 145 Q143 158 159 165 Q178 158 190 145 Q211 155 223 171 L207 236 L201 301 Q160 315 111 300 L119 236 L99 174 Q109 158 126 145Z" fill="#df8295" stroke="#bc637b" stroke-width="3"/>
+    <path d="M143 157 Q158 176 177 157" fill="none" stroke="#f7c1c6" stroke-width="7" stroke-linecap="round"/>
+    <path d="M115 235 Q159 247 207 234" fill="none" stroke="#c96d84" stroke-width="3" opacity=".8"/>
+    <path d="M114 299 Q161 309 201 298" fill="none" stroke="#bd647c" stroke-width="5"/>
+    <!-- hands -->
+    <ellipse cx="74" cy="282" rx="13" ry="15" fill="#f4c9a9"/><ellipse cx="250" cy="271" rx="13" ry="15" fill="#f4c9a9"/>
+    <!-- face -->
+    <ellipse cx="160" cy="91" rx="57" ry="66" fill="#f6cfb0"/>
+    <path d="M104 92 Q99 34 154 34 Q214 31 216 85 Q201 67 193 58 Q168 75 119 69Z" fill="#e9b64e"/>
+    <path d="M108 87 Q101 132 122 149 Q102 146 93 123 L94 76Z" fill="#e6ad47"/>
+    <path d="M211 83 Q225 127 199 148 Q222 143 231 115 L226 73Z" fill="#e6ad47"/>
+    <path d="M137 96 Q145 90 151 96" fill="none" stroke="#69494a" stroke-width="3" stroke-linecap="round"/><path d="M169 96 Q177 90 184 96" fill="none" stroke="#69494a" stroke-width="3" stroke-linecap="round"/>
+    <path d="M156 105 Q159 109 163 105" fill="none" stroke="#d4937d" stroke-width="2" stroke-linecap="round"/><path d="M151 119 Q160 128 171 118" fill="none" stroke="#b95769" stroke-width="3" stroke-linecap="round"/>
+    <ellipse cx="132" cy="109" rx="9" ry="5" fill="#ed9e99" opacity=".55"/><ellipse cx="188" cy="109" rx="9" ry="5" fill="#ed9e99" opacity=".55"/>
+    <!-- sweater buttons --> <circle cx="160" cy="197" r="3" fill="#ffe6bc"/><circle cx="160" cy="214" r="3" fill="#ffe6bc"/>
+   </svg>
+  </div>
+  <div class="panel">
+   <div class="eyebrow">Короткая игра • 45 секунд</div><h1>Дай пять!</h1>
+   <p>Это Лена, взрослая девушка. Смотри на её просьбу и выбирай дружелюбный ответ. Сначала — согласие, всегда.</p>
+   <div class="prompt" id="prompt">Нажми «Начать», когда будешь готов.</div>
+   <div class="actions">
+    <button class="action primary" data-action="highfive" disabled><span class="icon">🖐️</span><span><span class="label">Дать пять</span><span class="hint">только если Лена предложила</span></span></button>
+    <button class="action" data-action="wave" disabled><span class="icon">👋</span><span><span class="label">Помахать</span><span class="hint">дружеское приветствие</span></span></button>
+    <button class="action" data-action="compliment" disabled><span class="icon">🌼</span><span><span class="label">Сказать комплимент</span><span class="hint">добрые слова</span></span></button>
+    <button class="action" data-action="wait" disabled><span class="icon">☁️</span><span><span class="label">Дать паузу</span><span class="hint">уважать её выбор</span></span></button>
+   </div>
+   <div class="progress-wrap"><div class="progress" id="progress"></div></div>
+  </div>
+ </section>
+ <footer class="bottom"><span><strong>Правило игры:</strong> уважай «нет» и личные границы</span><button class="sound" id="sound" aria-label="Звук включён">🔊</button></footer>
+ <div class="toast" id="toast">Отлично!</div>
+ <div class="overlay" id="overlay"><div class="card"><div class="emoji">🖐️✨</div><h2 id="endTitle">Дай пять!</h2><p id="endCopy">Сыграй короткую игру на внимательность: отвечай на просьбы Лены и зарабатывай звёзды. Когда она хочет паузу — просто подожди.</p><button class="start" id="start">Начать игру</button></div></div>
+</main>
+<script>
+(()=>{
+ const $=s=>document.querySelector(s), buttons=[...document.querySelectorAll('.action')];
+ const prompts=[
+  {ask:'Хочешь дать мне пять? 🖐️',sub:'Я сама протянула ладонь — это моё «да».',right:'highfive',yes:'Класс! Отличная пятёрка! ✨'},
+  {ask:'Давай просто помашем друг другу! 👋',sub:'Сегодня без прикосновений, пожалуйста.',right:'wave',yes:'Привет-привет! 👋'},
+  {ask:'Расскажешь что-нибудь доброе? 🌼',sub:'Мне будет приятно услышать комплимент.',right:'compliment',yes:'Спасибо, ты поднял мне настроение! 🌷'},
+  {ask:'Мне нужна минутка отдыха ☁️',sub:'Сейчас ничего не делай — это тоже хороший выбор.',right:'wait',yes:'Спасибо, что уважаешь мою паузу 💛'}
+ ];
+ let score=0,time=45,active=false,current=null,timer=null,round=0,streak=0,soundOn=true,audio;
+ const scoreEl=$('#score'),timeEl=$('#time'),promptEl=$('#prompt'),speech=$('#speech'),overlay=$('#overlay'),progress=$('#progress'),person=$('#person'),toast=$('#toast');
+ function enable(on){buttons.forEach(b=>b.disabled=!on)}
+ function next(){round++;current=prompts[Math.floor(Math.random()*prompts.length)];speech.innerHTML=current.ask+'<small>'+current.sub+'</small>';promptEl.textContent='Выбери подходящий ответ';enable(true)}
+ function beep(ok){if(!soundOn)return;try{audio=audio||new(window.AudioContext||window.webkitAudioContext)();const o=audio.createOscillator(),g=audio.createGain();o.connect(g);g.connect(audio.destination);o.frequency.value=ok?660:220;g.gain.setValueAtTime(.08,audio.currentTime);g.gain.exponentialRampToValueAtTime(.001,audio.currentTime+.18);o.start();o.stop(audio.currentTime+.18)}catch(e){}}
+ function say(msg,good){toast.textContent=msg;toast.style.background=good?'#638f75':'#9b6471';toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1050);person.classList.remove('bounce');void person.offsetWidth;person.classList.add('bounce');beep(good)}
+ function answer(action){if(!active||!current)return;const ok=action===current.right;streak=ok?streak+1:0;score=Math.max(0,score+(ok?10+(streak>1?Math.min(streak,5)*2:0):-3));scoreEl.textContent=score;if(ok){say(current.yes,true);promptEl.textContent='Верный выбор! Новая ситуация…'}else{say(current.right==='wait'?'Она попросила паузу. Лучше дать ей время.':'Не совсем — прислушайся к её просьбе.',false);promptEl.textContent='Ничего страшного — попробуй снова'}setTimeout(()=>{if(active)next()},850)}
+ buttons.forEach(b=>b.addEventListener('click',()=>answer(b.dataset.action)));
+ function start(){clearInterval(timer);score=0;time=45;round=0;streak=0;active=true;scoreEl.textContent='0';timeEl.textContent=time;overlay.classList.add('hidden');next();timer=setInterval(()=>{time--;timeEl.textContent=time;progress.style.width=(time/45*100)+'%';if(time<=0)finish()},1000)}
+ function finish(){active=false;clearInterval(timer);enable(false);overlay.classList.remove('hidden');$('#endTitle').textContent=score>=100?'Звезда заботы!':'Хорошая игра!';$('#endCopy').textContent=`Твой результат: ${score} очков. Самое важное — спрашивать, замечать ответ и уважать личные границы.`;$('#start').textContent='Сыграть ещё';speech.innerHTML='Спасибо за игру! <small>Уважение делает общение приятным</small>';promptEl.textContent='Раунд завершён';progress.style.width='100%'}
+ $('#start').addEventListener('click',start);$('#sound').addEventListener('click',e=>{soundOn=!soundOn;e.currentTarget.textContent=soundOn?'🔊':'🔇';e.currentTarget.setAttribute('aria-label',soundOn?'Звук включён':'Звук выключен')});
+})();
+</script>
+</body>
+</html>
